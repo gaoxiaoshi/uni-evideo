@@ -1,0 +1,73 @@
+@font-face {
+  font-family: 'custom-icon';  /* project id 2294958 */
+  src: url('//at.alicdn.com/t/font_2294958_cr3qq7enrci.eot');
+  src: url('//at.alicdn.com/t/font_2294958_cr3qq7enrci.eot?#iefix') format('embedded-opentype'),
+  url('//at.alicdn.com/t/font_2294958_cr3qq7enrci.woff2') format('woff2'),
+  url('//at.alicdn.com/t/font_2294958_cr3qq7enrci.woff') format('woff'),
+  url('//at.alicdn.com/t/font_2294958_cr3qq7enrci.ttf') format('truetype'),
+  url('//at.alicdn.com/t/font_2294958_cr3qq7enrci.svg#custom-icon') format('svg');
+}
+.custom-icon {
+	font-family: "custom-icon" !important;
+	font-size: 16px;
+	font-style: normal;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+}
+.custom-icon-histrory:before {
+  content: "\e6b4";
+}
+.custom-icon-smile:before {
+  content: "\ecea";
+}
+.custom-icon-video:before {
+	content: "\e621"
+}
+.custom-icon-info:before {
+	content: "\e67c"
+}
+.custom-icon-tuijian:before {
+	content: "\e6a7"
+}
+.custom-icon-chargerecord:before {
+	content: "\e733"
+}
+.custom-icon-collect:before {
+	content: "\e62e"
+}
+.custom-icon-share:before {
+	content: "\e61e"
+}
+.custom-icon-charge:before {
+	content: "\e61d"
+}
+.custom-icon-vip:before {
+	content: "\e604"
+}
+.custom-icon-record:before {
+	content: "\e6df"
+}
+.custom-icon-account:before {
+	content: "\e603"
+}
+.custom-icon-password:before {
+	content: "\e681"
+}
+.custom-icon-radio:before {
+	content: "\e6e9"
+}
+.custom-icon-radio-check:before {
+	content: "\e653"
+}
+.custom-icon-booking:before {
+	content: "\e883"
+}
+.custom-icon-contact:before {
+	content: "\e613"
+}
+.custom-icon-telegram:before {
+	content: "\e600"
+}
+.custom-icon-whatsapp:before {
+	content: "\ed0e"
+}

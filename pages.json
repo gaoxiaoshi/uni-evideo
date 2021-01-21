@@ -1,0 +1,166 @@
+{
+	"easycom": {
+		"^u-(.*)": "@/uview-ui/components/u-$1/u-$1.vue"
+	},
+	"pages": [
+		{
+			"path": "pages/index/index",
+			"style": {
+				"navigationStyle": "custom"
+			}
+		},
+		{
+			"path": "pages/classify/index",
+			"style": {
+				"navigationBarTitleText": "All Classify",
+				"enablePullDownRefresh": false
+			}
+		},
+		{
+			"path": "pages/search/index",
+			"style": {
+				"navigationStyle": "custom"
+			}
+		},
+		{
+			"path": "pages/user/index",
+			"style": {
+				"navigationStyle": "custom",
+				"enablePullDownRefresh": true
+			}
+		},
+		{
+			"path": "pages/login/index",
+			"style": {
+				"navigationBarTitleText": "",
+				"enablePullDownRefresh": false
+			}
+		},
+		{
+			"path" : "pages/register/index",
+			"style":                                                                                    
+			{
+				"navigationBarTitleText": "",
+				"enablePullDownRefresh": false
+			}
+		},
+		{
+			"path" : "pages/video/index",
+			"style":                                                                                    
+			{
+				"navigationBarTitleText": "Video Detail",
+				"enablePullDownRefresh": false
+			}	
+		},
+		{
+			"path" : "pages/user/account/index",
+			"style":                                                                                    
+			{
+					"navigationBarTitleText": "Account",
+					"enablePullDownRefresh": false
+			}
+    },
+		{
+			"path" : "pages/user/account/account",
+			"style":                                                                                    
+			{
+				"navigationBarTitleText": "Change Account",
+				"enablePullDownRefresh": false
+			}
+		},
+		{
+			"path" : "pages/user/account/password",
+			"style":                                                                                    
+			{
+				"navigationBarTitleText": "Change Password",
+				"enablePullDownRefresh": false
+			}
+		},
+		{
+			"path" : "pages/user/collect",
+			"style":                                                                                    
+			{
+				"navigationBarTitleText": "Collect",
+				"enablePullDownRefresh": true
+			}
+		},
+		{
+			"path" : "pages/user/history",
+			"style":                                                                                    
+			{
+				"navigationBarTitleText": "History",
+				"enablePullDownRefresh": true
+			}
+		},
+		{
+			"path" : "pages/user/vip",
+			"style" :                                                                                    
+			{
+					"navigationBarTitleText": "Purchase Membership",
+					"enablePullDownRefresh": false
+			}
+		},
+		{
+			"path" : "pages/user/recharge",
+			"style" :                                                                                    
+			{
+				"navigationBarTitleText": "Recharge",
+				"enablePullDownRefresh": true
+			}
+		},
+		{
+			"path" : "pages/user/recharge-record",
+			"style" :                                                                                    
+			{
+				"navigationBarTitleText": "Recharge Record",
+				"enablePullDownRefresh": true
+			}
+		},
+		{
+			"path" : "pages/user/consume-record",
+			"style" :                                                                                    
+			{
+				"navigationBarTitleText": "Consume Record",
+				"enablePullDownRefresh": true
+			}
+		},
+		{
+			"path" : "pages/user/contact",
+			"style" :                                                                                    
+			{
+				"navigationBarTitleText": "Contact Us",
+				"enablePullDownRefresh": false
+			}
+		},
+		{
+			"path" : "pages/payment/index",
+			"style" :                                                                                    
+			{
+				"navigationBarTitleText": "Payment",
+				"enablePullDownRefresh": false
+			}
+		}
+	],
+	"globalStyle": {
+		"navigationBarTextStyle": "black",
+		"navigationBarTitleText": "LookVideo",
+		"navigationBarBackgroundColor": "#fff",
+		"backgroundColor": "#F8F8F8"
+	},
+	"tabBar": {
+		"list": [
+			{
+				"pagePath": "pages/index/index"
+			},
+			{
+				"pagePath": "pages/classify/index"
+			},
+			{
+				"pagePath": "pages/search/index"
+			},
+			{
+				"pagePath": "pages/user/index"
+			}
+		]
+	}
+}
