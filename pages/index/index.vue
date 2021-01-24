@@ -33,7 +33,7 @@
 				</swiper>
 			</view>
 		</view>
-		<view class="notice-view">
+		<view class="notice-view" v-if="noticeList.length > 0">
 			<u-notice-bar
 				type="none"
 				mode="vertical"

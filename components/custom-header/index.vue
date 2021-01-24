@@ -2,7 +2,7 @@
 	<view class="custom-header" :class="{'nav_top': showNavTop}">
 		<view class="header">
 			<view class="head_a">
-				<image class="head_logo" :src="`${$helper.commonSourcePath}${showNavTop ? globalConfig.logo_black : globalConfig.logo_white}`" mode="aspectFit"></image>
+				<!-- <image class="head_logo" :src="`${$helper.commonSourcePath}${showNavTop ? globalConfig.logo_black : globalConfig.logo_white}`" mode="aspectFit"></image> -->
 				<view class="head_menu">
 					<view class="head_menu-item" @click="handleUserHistory"><u-icon name="histrory" custom-prefix="custom-icon" size="24px"></u-icon></view>
 					<view class="head_menu-item" @click="handleUserCenter"><u-icon name="smile" custom-prefix="custom-icon" size="24px"></u-icon></view>
@@ -76,7 +76,7 @@
 			position: relative;
 			.head_a {
 				display: flex;
-				justify-content: space-between;
+				justify-content: flex-end;
 				align-items: center;
 				height: 90rpx;
 				padding: 0 30rpx;

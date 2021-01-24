@@ -75,8 +75,9 @@
 			this.getVideosType()
 		},
 		methods: {
-			getVideosType () {
-				let list = uni.getStorageSync('videosType') ? uni.getStorageSync('videosType') : [];
+			getVideosType (id) {
+				// let list = uni.getStorageSync('videosType') ? uni.getStorageSync('videosType') : [];
+				let list = []
 				if (list.length === 0) {
 					this.$http.post('/videos/videos/getVideoTypeLists').then(res => {
 						if (res.code === 200) {
