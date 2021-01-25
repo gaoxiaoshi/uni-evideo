@@ -78,7 +78,8 @@
 		<u-tabbar
 			:list="tabbarlist"
 			active-color="#4eacee"
-			inactive-color="#74767b">
+			inactive-color="#74767b"
+			:mid-button="true">
 		</u-tabbar>
 	</view>
 </template>
@@ -151,7 +152,8 @@
 				uni.showModal({
 					title: this.noticeList[e].title,
 					content: this.noticeList[e].content,
-					showCancel: false
+					showCancel: false,
+					confirmText: 'Confirm'
 				})
 			},
 			handleVideoDetail (id) {

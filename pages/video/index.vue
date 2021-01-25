@@ -81,9 +81,10 @@
 		onShow() {
 			if (!this.vid) {
 				uni.showModal({
-					title: '提示',
-					content: '未找到该信息',
+					title: 'Message',
+					content: "Can't find",
 					showCancel: false,
+					confirmText: 'Confirm',
 					success() {
 						uni.navigateBack()
 					}

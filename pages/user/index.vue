@@ -71,7 +71,8 @@
 		<u-tabbar
 			:list="tabbarlist"
 			active-color="#4eacee"
-			inactive-color="#74767b">
+			inactive-color="#74767b"
+			:mid-button="true">
 		</u-tabbar>
 	</view>
 </template>

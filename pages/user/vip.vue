@@ -75,6 +75,7 @@
 						uni.showModal({
 							content: res.msg,
 							showCancel: false,
+							confirmText: 'Confirm',
 							success() {
 								uni.navigateBack()
 							}
