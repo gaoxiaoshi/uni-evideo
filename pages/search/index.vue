@@ -60,9 +60,10 @@
 		</view>
 		<u-tabbar
 			:list="tabbarlist"
-			active-color="#4eacee"
+			active-color="#fe9900"
 			inactive-color="#74767b"
-			:mid-button="true">
+			:mid-button="true"
+			bg-color="#1e1e1e">
 		</u-tabbar>
 	</view>
 </template>
@@ -132,7 +133,7 @@
 			//加载热门搜索
 			loadHotKeyword() {
 				//定义热门搜索关键字，可以自己实现ajax请求数据再赋值
-				this.$http.post('/videos/videos/hotKeyWords').then((res)=>{
+				this.$http.post('/api.php/videos/videos/hotKeyWords').then((res)=>{
 					if(res.data.list.length > 0){
 						this.hotKeywordList = res.data.list;
 					}
@@ -195,7 +196,7 @@
 				uni.showLoading({
 					title: this.$t('loading')
 				})
-				this.$http.post('/videos/videos/searchKeywords',{keyword: key}).then((res)=>{
+				this.$http.post('/api.php/videos/videos/searchKeywords',{keyword: key}).then((res)=>{
 					uni.hideLoading()
 					if(res.data.length > 0){
 						this.keywordList = this.drawCorrelativeKeyword(res.data, key);

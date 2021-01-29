@@ -11,7 +11,7 @@
 					:duration="item.duration"
 					:play="item.flag">
 				</short-video>
-				<cover-view class="cover-view-marks">
+				<!-- <cover-view class="cover-view-marks">
 					<div :style="{ height: height,width: width }" @click.stop="clickVideo" @touchmove="ListTouchMove" @touchend.stop="ListTouchEnd"
 					@touchstart="ListTouchStart">
 					</div>
@@ -27,22 +27,23 @@
 					<text class="right-follow">+</text>
 					<!-- <cover-image :src="item.check?'../../../static/img/axc.png':'../../../static/img/bed.png' " class="img-left" @click.stop="tapLove"></cover-image> -->
 					<!-- <text class="iconfont " :class="item.check?'right-checkLove':'right-iconfont'" @click.stop="tapLove">&#xe757;</text> -->
-					<text class="right-text">{{item.giveNum}}</text>
+					<!-- <text class="right-text">{{item.giveNum}}</text> -->
 					<!-- <cover-image src="../../../static/img/ay2.png" style="height: 80upx;"  class="img-left" @click.stop="tapMsg"></cover-image> -->
 					<!-- <text class="iconfont right-iconfont" @click.stop="tapMsg">&#xe612;</text> -->
-					<text class="right-text">{{item.commentsNum}}</text>
+					<!-- <text class="right-text">{{item.commentsNum}}</text> -->
 					<!-- <cover-image  src="../../../static/img/b6p.png" style="height: 76upx;"  class="img-left" @click.stop="tapShare"></cover-image> -->
 					<!-- <text class="iconfont right-iconfont" @click.stop="tapShare">&#xe627;</text> -->
-					<text class="right-text">{{item.forwardsNum}}</text>
+					<!-- <text class="right-text">{{item.forwardsNum}}</text> -->
 					<!-- <cover-image src="../../../static/changpian.png" class="musicIcon img"></cover-image> -->
-				</cover-view>
+				<!--</cover-view> -->
 			</block>
 		</view>
 		<u-tabbar
 			:list="tabbarlist"
-			active-color="#4eacee"
+			active-color="#fe9900"
 			inactive-color="#74767b"
-			:mid-button="true">
+			:mid-button="true"
+			bg-color="#1e1e1e">
 		</u-tabbar>
 	</view>
 </template>

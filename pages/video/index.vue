@@ -116,7 +116,7 @@
 		},
 		methods: {
 			init () {
-				this.$http.post('/index/config/getConfig',{}).then((res)=>{
+				this.$http.post('/api.php/index/config/getConfig',{}).then((res)=>{
 					uni.setStorageSync('sys_config', res.data)
 					// 系统参数
 					this.sysconfig = res.data
@@ -131,7 +131,7 @@
 				uni.showLoading({
 					title: this.$t('loading')
 				})
-				this.$http.post('/videos/videos/getVideoDetail', {
+				this.$http.post('/api.php/videos/videos/getVideoDetail', {
 					vid: this.vid
 				}).then(res => {
 					uni.hideLoading()
@@ -169,7 +169,7 @@
 						}
 					})
 				} else {
-					this.$http.post('/videos/videos/addLike', {id: this.vid}).then(res => {
+					this.$http.post('/api.php/videos/videos/addLike', {id: this.vid}).then(res => {
 						if (res.code === 200) {
 							this.isLike = res.data ? true : false
 							uni.showToast({
@@ -187,7 +187,7 @@
 					lang: 'en',
 					video: {
 						url: this.srcList[this.vod_play_from[this.currentLine]][this.currentSrc].url,
-						pic: this.vod_pic,
+						pic: this.$helper.videoSourcePath + this.vod_pic,
 						type: 'customHls',
 						customType: {
 							customHls: function (video, player) {
@@ -228,7 +228,7 @@
 				uni.showLoading({
 					title: this.$t('pay')
 				})
-				this.$http.post('/finance/exchange/exchangeVideo', params).then(res => {
+				this.$http.post('/api.php/finance/exchange/exchangeVideo', params).then(res => {
 					uni.hideLoading()
 					if (res.code == 200) {
 						let _this = this

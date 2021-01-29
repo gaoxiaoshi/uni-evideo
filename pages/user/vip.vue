@@ -1,7 +1,7 @@
 <template>
 	<view class="membership-view">
 		<view class="membership-header">
-			<image class="header-avatar" width="120rpx" height="120rpx" border-radius="60rpx" :src="userInfo ? $helper.commonSourcePath + userInfo.avatar : '../../static/avatar.png'" mode="aspectFit"></image>
+			<u-image class="header-avatar" width="110rpx" height="110rpx" border-radius="55rpx" :src="userInfo && userInfo.avatar ? $helper.commonSourcePath + userInfo.avatar : '../../static/avatar.png'" mode="aspectFit"></u-image>
 			<view class="header-info">
 				<view class="username">{{userInfo && userInfo.username}}</view>
 				<view class="id">ID:{{userInfo && userInfo.id}}</view>
@@ -45,12 +45,12 @@
 				uni.showLoading({
 					title: this.$t('loading')
 				})
-				this.$http.post('/index/config/getConfig').then(res => {
+				this.$http.post('/api.php/index/config/getConfig').then(res => {
 					uni.stopPullDownRefresh()
 					uni.setStorageSync('sys_config', res.data)
 					uni.setStorageSync('userInfo', res.data.userinfo)
 					this.userInfo = res.data.userinfo
-					return this.$http.post('/user/user/getUserGroup')
+					return this.$http.post('/api.php/user/user/getUserGroup')
 				}).then(res => {
 					if (res.code === 200) {
 						this.packageList = res.data
@@ -69,7 +69,7 @@
 					price: this.packageList[this.current].price,
 					group_id: this.packageList[this.current].id
 				}
-				this.$http.post('/finance/exchange/exchangeMember', params).then(res => {
+				this.$http.post('/api.php/finance/exchange/exchangeMember', params).then(res => {
 					uni.hideLoading()
 					if (res.code === 200) {
 						uni.showModal({
@@ -98,7 +98,9 @@
 		align-items: center;
 		padding: 0 30rpx 40rpx;
 		height: 240rpx;
-		background-image: linear-gradient( 40deg, #76d8f7 0%, #ce98f8 100%);
+		// background-image: linear-gradient( 40deg, #76d8f7 0%, #ce98f8 100%);
+		background: url(../../static/user_bg.jpg) no-repeat center center;
+		background-size: cover;
 		.header-avatar {
 			width: 120rpx;
 			height: 120rpx;

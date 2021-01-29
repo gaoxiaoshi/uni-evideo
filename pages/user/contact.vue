@@ -28,7 +28,7 @@
 		},
 		methods: {
 			init() {
-				this.$http.post('/index/config/getConfig').then( res => {
+				this.$http.post('/api.php/index/config/getConfig').then( res => {
 					uni.setStorageSync('sys_config', res.data)
 					if (res.data.content_telegram) {
 						let telegram = res.data.content_telegram.split('|')

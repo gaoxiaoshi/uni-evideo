@@ -50,7 +50,7 @@
 				:key="index">
 				<view class="item-head">
 					<view class="head-title">
-						<u-icon name="video" custom-prefix="custom-icon" color="#4eacee" size="32"></u-icon>
+						<u-icon name="video" custom-prefix="custom-icon" color="#fe9900" size="32"></u-icon>
 						<text class="text">{{$t(`classilfy.${item.type_en}`)}}</text>
 					</view>
 					<view class="head-num">
@@ -77,9 +77,10 @@
 		</view>
 		<u-tabbar
 			:list="tabbarlist"
-			active-color="#4eacee"
+			active-color="#fe9900"
 			inactive-color="#74767b"
-			:mid-button="true">
+			:mid-button="true"
+			bg-color="#1e1e1e">
 		</u-tabbar>
 	</view>
 </template>
@@ -119,7 +120,7 @@
 				this.getHomeVideoList()
 			},
 			getHomeBannerList () {
-				this.$http.post('/banner/banner/getBannerLists').then(res => {
+				this.$http.post('/api.php/banner/banner/getBannerLists').then(res => {
 					if (res.code === 200) {
 						let list = res.data.list
 						this.bannerList = list.map(item => {
@@ -133,14 +134,14 @@
 				})
 			},
 			getHomeNoticeList () {
-				this.$http.post('/index/home/getMsgLists').then(res => {
+				this.$http.post('/api.php/index/home/getMsgLists').then(res => {
 					if (res.code === 200) {
 						this.noticeList = res.data.list
 					}
 				})
 			},
 			getHomeVideoList () {
-				this.$http.post('/videos/videos/getHomeVideoLists').then(res => {
+				this.$http.post('/api.php/videos/videos/getHomeVideoLists').then(res => {
 					uni.hideLoading()
 					console.log(res.data.list)
 					if (res.code === 200) {
@@ -253,7 +254,7 @@
 					.text {
 						color: #a1a5a5;
 						.num {
-							color: #4eacee;
+							color: #fe9900;
 							margin-left: 10rpx;
 						}
 					}

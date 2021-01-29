@@ -40,9 +40,10 @@
 		</view>
 		<u-tabbar
 			:list="tabbarlist"
-			active-color="#4eacee"
+			active-color="#fe9900"
 			inactive-color="#74767b"
-			:mid-button="true">
+			:mid-button="true"
+			bg-color="#1e1e1e">
 		</u-tabbar>
 	</view>
 </template>
@@ -80,7 +81,7 @@
 				// let list = uni.getStorageSync('videosType') ? uni.getStorageSync('videosType') : [];
 				let list = []
 				if (list.length === 0) {
-					this.$http.post('/videos/videos/getVideoTypeLists').then(res => {
+					this.$http.post('/api.php/videos/videos/getVideoTypeLists').then(res => {
 						if (res.code === 200) {
 							this.list = res.data.map(item => {
 								return {
@@ -112,7 +113,7 @@
 					mask: true,
 				}) */
 				this.loadStatus = 'loading'
-				this.$http.post('/videos/videos/getVideoLists', params).then(res => {
+				this.$http.post('/api.php/videos/videos/getVideoLists', params).then(res => {
 					uni.hideLoading()
 					if (res.code === 200) {
 						if (res.data.page * res.data.limit >= res.data.count) {

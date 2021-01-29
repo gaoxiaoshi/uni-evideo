@@ -58,7 +58,7 @@
 				uni.showLoading({
 					title: this.$t('loading')
 				})
-				this.$http.post('/index/config/getConfig').then(res => {
+				this.$http.post('/api.php/index/config/getConfig').then(res => {
 					uni.hideLoading()
 					uni.stopPullDownRefresh()
 					uni.setStorageSync('sys_config', res.data)
@@ -75,7 +75,7 @@
 			},
 			handleConfirm () {
 				this.loading = true
-				this.$http.post('/finance/recharge/createOrder', { amount: this.list[this.currentItem] }).then(res => {
+				this.$http.post('/api.php/finance/recharge/createOrder', { amount: this.list[this.currentItem] }).then(res => {
 					this.loading = false
 					if (res.code == 200) {
 						let { order_sn, amount } = res.data
@@ -105,7 +105,9 @@
 		justify-content: center;
 		height: 200rpx;
 		color: #fff;
-		background-image: linear-gradient( 40deg, #76d8f7 0%, #ce98f8 100%);
+		// background-image: linear-gradient( 40deg, #76d8f7 0%, #ce98f8 100%);
+		background: url(../../static/user_bg.jpg) no-repeat center center;
+		background-size: cover;
 		.text {
 			opacity: 0.6;
 			font-weight: bold;

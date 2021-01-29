@@ -38,7 +38,7 @@
 		},
 		methods: {
 			init() {
-				this.$http.post('/index/config/getConfig').then( res => {
+				this.$http.post('/api.php/index/config/getConfig').then( res => {
 					uni.setStorageSync('sys_config', res.data)
 					let userInfo = res.data.userinfo
 					if (userInfo) {
@@ -76,7 +76,7 @@
 					type: 'avatar'
 				}
 				this.avatarLoading = true
-				this.$http.post('/attachment/attachment/uploadImg', params).then(res => {
+				this.$http.post('/api.php/attachment/attachment/uploadImg', params).then(res => {
 					uni.showToast({title: res.msg, icon: 'none'});
 					this.avatarLoading = false
 					if (res.code == 200) {
@@ -94,7 +94,7 @@
 				uni.showLoading({
 					title: this.$t('loading')
 				})
-				this.$http.post('/user/user/changeUsi', params).then(res => {
+				this.$http.post('/api.php/user/user/changeUsi', params).then(res => {
 					uni.hideLoading()
 					uni.showToast({title: res.msg, icon: 'none'})
 					if (res.code == 200) {

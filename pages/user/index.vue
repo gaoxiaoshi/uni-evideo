@@ -70,9 +70,10 @@
 		</view>
 		<u-tabbar
 			:list="tabbarlist"
-			active-color="#4eacee"
+			active-color="#fe9900"
 			inactive-color="#74767b"
-			:mid-button="true">
+			:mid-button="true"
+			bg-color="#1e1e1e">
 		</u-tabbar>
 	</view>
 </template>
@@ -100,7 +101,7 @@
 		},
 		methods: {
 			init() {
-				this.$http.post('/index/config/getConfig').then( res => {
+				this.$http.post('/api.php/index/config/getConfig').then( res => {
 					uni.stopPullDownRefresh()
 					uni.setStorageSync('sys_config', res.data)
 					uni.setStorageSync('userInfo', res.data.userinfo)
@@ -176,7 +177,7 @@
 				}
 			},
 			logout() {
-				this.$http.post('/user/auth/logout').then(res => {
+				this.$http.post('/api.php/user/auth/logout').then(res => {
 					uni.showToast({title: res.msg, icon: 'none'})
 					if (res.code == 200) {
 						this.userInfo = null
@@ -202,14 +203,16 @@
 		align-items: center;
 		height: 310rpx;
 		padding-top: var(--status-bar-height);
-		background-image: linear-gradient( 40deg, #76d8f7 0%, #ce98f8 100%);
+		// background-image: linear-gradient( 40deg, #76d8f7 0%, #ce98f8 100%);
+		background: url(../../static/user_bg.jpg) no-repeat center center;
+		background-size: cover;
 		.header-avatar {
 			width: 150rpx;
 			height: 150rpx;
 			border-radius: 50%;
 		}
 		.header-name {
-			color: #333;
+			color: #fff;
 			font-size: 40rpx;
 			margin-top: 18rpx;
 		}

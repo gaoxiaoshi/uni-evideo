@@ -11,7 +11,7 @@
 			</u-cell-item>
 		</u-cell-group>
 		<view class="recharge-submit">
-			<u-button type="primary" shape="circle" :loading="loading" @click="handlePay">{{loading ? 'Waiting' : 'Paying Now'}}</u-button>
+			<u-button type="primary" shape="circle" :loading="loading" @click="handlePay">{{loading ? `Waiting, Don't close the page` : 'Paying Now'}}</u-button>
 		</view>
 		<view class="recharge-tips">Tips：After payment, if the account is not received after 30 minutes, please contact customer service</view>
 	</view>
@@ -23,37 +23,40 @@
 			return {
 				order_sn: '',
 				amount: '',
-				ptype: '100',
+				ptype: 'UPI',
 				payList: [
 					{
-						type: '100',
+						type: 'UPI',
 						name: 'UPI',
 						icon: 'icon-pay-upi'
 					},
 					{
-						type: '3',
+						type: 'Paytm',
 						name: 'Bank Card',
 						icon: 'icon-pay-card'
 					}
 				],
-				loading: false
+				loading: false,
+				timer: null
 			}
 		},
 		onLoad(options) {
 			this.order_sn = options.order_sn
 			this.amount = options.amount
-		},
-		onShow() {
 			this.init()
+		},
+		onUnload() {
+			clearInterval(this.timer)
 		},
 		methods: {
 			init () {
-				this.$http.post('/finance/recharge/getOrder', {
+				this.$http.post('/api.php/finance/recharge/getOrder', {
 					order_sn: this.order_sn
 				}).then(res => {
 					if (res.code === 200) {
 						if (res.data.status == 1) {
 							this.loading = false
+							clearInterval(this.timer)
 							uni.showModal({
 								content: 'Recharge Successfull',
 								showCancel: false,
@@ -64,6 +67,13 @@
 									})
 								}
 							})
+						} else if (res.data.status == 2) {
+							this.loading = true
+							this.createTimer()
+						} else if (res.data.status == -1) {
+							uni.reLaunch({
+								url: '../index/index'
+							})
 						}
 					}
 				})
@@ -71,15 +81,45 @@
 			handlePayWay (type) {
 				this.ptype = type
 			},
+			createTimer () {
+				clearInterval(this.timer)
+				this.timer = setInterval(() => {
+					setTimeout(() => {
+						this.init()
+					}, 0)
+				}, 3000)
+			},
 			handlePay () {
 				this.loading = true
-				this.$http.post('/finance/pay/pay', {
+				this.$http.post('/api.php/finance/pay/pay', {
 					order_sn: this.order_sn,
 					amount: this.amount,
 					ptype: this.ptype
 				}).then(res => {
 					if (res.code === 200) {
-						window.open(res.data.data.url, '_blank')
+						if (res.data.status == 'FAIL') {
+							this.cancelPay(res.data.message)
+						} else {
+							this.createTimer()
+							window.open(res.data.info.url, '_blank')
+						}
+					}
+				})
+			},
+			cancelPay (errorMsg) {
+				this.$http.post('/api.php/finance/pay/payCancel', {
+					order_sn: this.order_sn
+				}).then(res => {
+					if (res.code === 200) {
+						uni.showModal({
+							title: 'FAIL',
+							content: `${errorMsg}, Please return`,
+							showCancel: false,
+							confirmText: 'Confirm',
+							success() {
+								uni.navigateBack()
+							}
+						})
 					}
 				})
 			}

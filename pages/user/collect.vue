@@ -43,7 +43,7 @@
 				uni.showLoading({
 					title: this.$t('loading')
 				})
-				this.$http.post('/videos/videos/getUserLikeList').then(res => {
+				this.$http.post('/api.php/videos/videos/getUserLikeList').then(res => {
 					uni.hideLoading()
 					if (res.code === 200) {
 						this.likeList = res.data
@@ -51,7 +51,7 @@
 				})
 			},
 			removeLike (id) {
-				this.$http.post('/videos/videos/addLike', {id: id}).then(res => {
+				this.$http.post('/api.php/videos/videos/addLike', {id: id}).then(res => {
 					if (res.code === 200) {
 						this.init()
 					}

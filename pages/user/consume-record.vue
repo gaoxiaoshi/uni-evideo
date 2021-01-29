@@ -72,7 +72,7 @@
 				uni.showLoading({
 					title: this.$t('loading')
 				})
-				this.$http.post('/index/config/getConfig').then(res => {
+				this.$http.post('/api.php/index/config/getConfig').then(res => {
 					uni.stopPullDownRefresh()
 					uni.setStorageSync('sys_config', res.data)
 					uni.setStorageSync('userInfo', res.data.userinfo)
@@ -106,7 +106,7 @@
 					limit: this.limit
 				}
 				this.loadStatus = 'loading'
-				this.$http.post('/finance/consume/getConsumeList', params).then(res => {
+				this.$http.post('/api.php/finance/consume/getConsumeList', params).then(res => {
 					uni.hideLoading()
 					if (res.code === 200) {
 						if (res.data.page * res.data.limit >= res.data.count) {
@@ -150,7 +150,9 @@
 		justify-content: center;
 		height: 200rpx;
 		color: #fff;
-		background-image: linear-gradient( 40deg, #76d8f7 0%, #ce98f8 100%);
+		// background-image: linear-gradient( 40deg, #76d8f7 0%, #ce98f8 100%);
+		background: url(../../static/user_bg.jpg) no-repeat center center;
+		background-size: cover;
 		.text {
 			opacity: 0.6;
 			font-weight: bold;

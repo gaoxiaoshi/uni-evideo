@@ -14,6 +14,13 @@ const user = {
 				pagePath: "/pages/classify/index"
 			},
 			{
+				iconPath: "/static/tabbar/rec.png",
+				selectedIconPath: "/static/tabbar/rec-selected.png",
+				text: 'Wonderful',
+				midButton: true,
+				pagePath: "/pages/short/index"
+			},
+			{
 				iconPath: "/static/tabbar/search.png",
 				selectedIconPath: "/static/tabbar/search-selected.png",
 				text: 'Search',

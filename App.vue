@@ -16,7 +16,7 @@
 		onShow: function() {
 			console.log('App Show')
 			// 获取公共配置
-			this.$http.post('/index/config/getConfig').then(res => {
+			this.$http.post('/api.php/index/config/getConfig').then(res => {
 				if (res.code == 200) {
 					uni.setStorageSync('sys_config', res.data)
 				}

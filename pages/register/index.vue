@@ -109,7 +109,7 @@
 					device_id: this.device_id
 				}
 				this.isRotate = true
-				this.$http.post('/user/auth/dosth', params).then(res => {
+				this.$http.post('/api.php/user/auth/dosth', params).then(res => {
 					this.isRotate = false
 					if (res.code === 200) {
 						uni.setStorageSync('userInfo', res.data)

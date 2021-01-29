@@ -1,18 +1,20 @@
 // 接口通讯密匙(API后台获取) websiteSecret
 const websiteSecret = '604d6iI5dv4c9KFPMQbB6KYygRXDcF8xwVrWRGBPaUbBlMnYfWmYZKJWAFD7';
-// 接口地址
-const apiUrl = 'https://www.sexyladdy.com/api.php';
-// const apiUrl = 'http://www.peachcolor6969.com/api.php';
-// const apiUrl = 'http://www.onenight3366.com/api.php';
-// const apiUrl = 'http://www.peachethics.com/api.php';
 
+// 接口地址
+let apiUrl = '';
 // 影视资源地址
-const videoSourcePath = 'https://source.sexyladdy.com/';
+let videoSourcePath = '';
 // 普通资源地址
-const commonSourcePath = 'https://www.sexyladdy.com/'
-// const commonSourcePath = 'http://www.peachcolor6969.com/'
-// const commonSourcePath = 'http://www.onenight3366.com/'
-// const commonSourcePath = 'http://www.peachethics.com/'
+let commonSourcePath = '';
+
+if(process.env.NODE_ENV === 'development'){
+	videoSourcePath = 'http://source.evideo.com/';
+	commonSourcePath = 'http://www.evideo.com/'
+}else{
+	videoSourcePath = 'https://source.sexyladdy.com/';
+	commonSourcePath = window.location.origin + '/'
+}
 
 var getUrlName = function getUrlName(url) {
 	let tmp= new Array();//临时变量，保存分割字符串

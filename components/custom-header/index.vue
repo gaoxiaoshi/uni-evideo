@@ -4,14 +4,14 @@
 			<view class="head_a">
 				<!-- <image class="head_logo" :src="`${$helper.commonSourcePath}${showNavTop ? globalConfig.logo_black : globalConfig.logo_white}`" mode="aspectFit"></image> -->
 				<view class="head_menu">
-					<view class="head_menu-item" @click="handleUserHistory"><u-icon name="histrory" custom-prefix="custom-icon" size="24px"></u-icon></view>
-					<view class="head_menu-item" @click="handleUserCenter"><u-icon name="smile" custom-prefix="custom-icon" size="24px"></u-icon></view>
+					<view class="head_menu-item" @click="handleUserHistory"><u-icon name="histrory" custom-prefix="custom-icon" color="#fe9900" size="24px"></u-icon></view>
+					<view class="head_menu-item" @click="handleUserCenter"><u-icon name="smile" custom-prefix="custom-icon" color="#fe9900" size="24px"></u-icon></view>
 				</view>
 			</view>
 		</view>
 		<view class="header">
 			<view class="head_b">
-				<view class="menu" @click="handleToClass"><u-icon name="list-dot" size="24px"></u-icon></view>
+				<view class="menu" @click="handleToClass"><u-icon name="list-dot" size="24px" color="#fe9900"></u-icon></view>
 				<view class="search" @click="handleToSearch">
 					<view class="search-content">
 						<u-icon name="search" color="#aaa"></u-icon>

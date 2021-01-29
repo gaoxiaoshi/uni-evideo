@@ -13,7 +13,7 @@
 						<view class="type">{{item.order_sn}}</view>
 						<view class="time">
 							<u-link :color="item.status == 0 ? '#f90' : item.status == 1 ? '#19be6b' : '#909399'">
-								{{item.status == 0 ? 'UnPaid' : item.status == 1 ? 'Paid' : 'Cancelled'}}
+								{{getStatusText(item.status)}}
 							</u-link>
 						</view>
 					</view>
@@ -21,10 +21,10 @@
 						<view class="content">{{item.ctime}}</view>
 						<view class="money">+{{item.money}}</view>
 					</view>
-					<view class="item-bottom" v-if="item.status == 0">
+					<!-- <view class="item-bottom" v-if="item.status == 0">
 						<u-button class="btn" size="mini" shape="circle" @click="handleCancel(item)">Cancel</u-button>
 						<u-button class="btn" size="mini" type="primary" shape="circle" @click="handlePay(item)">Pay</u-button>
-					</view>
+					</view> -->
 				</view>
 			</view>
 			<u-loadmore :status="loadStatus" :icon-type="loadIcon" :load-text="loadText"></u-loadmore>
@@ -58,7 +58,7 @@
 				uni.showLoading({
 					title: this.$t('loading')
 				})
-				this.$http.post('/index/config/getConfig').then(res => {
+				this.$http.post('/api.php/index/config/getConfig').then(res => {
 					uni.stopPullDownRefresh()
 					uni.setStorageSync('sys_config', res.data)
 					uni.setStorageSync('userInfo', res.data.userinfo)
@@ -76,7 +76,7 @@
 					limit: this.limit
 				}
 				this.loadStatus = 'loading'
-				this.$http.post('/finance/recharge/getRechargeList', params).then(res => {
+				this.$http.post('/api.php/finance/recharge/getRechargeList', params).then(res => {
 					uni.hideLoading()
 					if (res.code === 200) {
 						if (res.data.page * res.data.limit >= res.data.count) {
@@ -99,7 +99,7 @@
 				uni.showLoading({
 					title: this.$t('loading')
 				})
-				this.$http.post('/finance/recharge/cancelOrder', {
+				this.$http.post('/api.php/finance/recharge/cancelOrder', {
 					order_id: item.id
 				}).then(res => {
 					uni.hideLoading()
@@ -112,6 +112,17 @@
 				uni.navigateTo({
 					url: `/pages/payment/index?order_sn=${item.order_sn}&amount=${item.amount}`
 				})
+			},
+			getStatusText (status) {
+				if (status === -1) {
+					return 'Failed'
+				} else if (status === 0) {
+					return 'UnPaid'
+				} else if (status === 1) {
+					return 'Success'
+				} else {
+					return 'Waiting'
+				}
 			}
 		},
 		onPullDownRefresh () {
@@ -138,7 +149,9 @@
 		justify-content: center;
 		height: 200rpx;
 		color: #fff;
-		background-image: linear-gradient( 40deg, #76d8f7 0%, #ce98f8 100%);
+		// background-image: linear-gradient( 40deg, #76d8f7 0%, #ce98f8 100%);
+		background: url(../../static/user_bg.jpg) no-repeat center center;
+		background-size: cover;
 		.text {
 			opacity: 0.6;
 			font-weight: bold;

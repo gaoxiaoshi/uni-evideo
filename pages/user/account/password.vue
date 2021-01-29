@@ -50,7 +50,7 @@
 					oldpassword: this.oldpassword,
 					repassword: this.repassword
 				}
-				this.$http.post('/user/user/changePassword', params).then((res)=>{
+				this.$http.post('/api.php/user/user/changePassword', params).then((res)=>{
 					uni.hideLoading()
 					if (res.code == 200) {
 						uni.showToast({title: res.msg, icon: 'none', duration: 2000})

@@ -19,7 +19,7 @@
 		{
 			"path": "pages/search/index",
 			"style": {
-				"navigationStyle": "custom"
+				"navigationBarTitleText": "Search"
 			}
 		},
 		{
@@ -139,12 +139,20 @@
 				"navigationBarTitleText": "Payment",
 				"enablePullDownRefresh": false
 			}
+		},
+		{
+			"path" : "pages/short/index",
+			"style" :                                                                                    
+			{
+				"navigationBarTitleText": "Wonderful",
+				"enablePullDownRefresh": false
+			}
 		}
-	],
+  ],
 	"globalStyle": {
-		"navigationBarTextStyle": "black",
+		"navigationBarTextStyle": "white",
 		"navigationBarTitleText": "LookVideo",
-		"navigationBarBackgroundColor": "#fff",
+		"navigationBarBackgroundColor": "#1e1e1e",
 		"backgroundColor": "#F8F8F8"
 	},
 	"tabBar": {
@@ -154,6 +162,9 @@
 			},
 			{
 				"pagePath": "pages/classify/index"
+			},
+			{
+				"pagePath" : "pages/short/index"
 			},
 			{
 				"pagePath": "pages/search/index"
