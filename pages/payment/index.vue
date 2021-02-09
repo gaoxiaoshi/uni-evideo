@@ -23,15 +23,15 @@
 			return {
 				order_sn: '',
 				amount: '',
-				ptype: 'UPI',
+				ptype: 'upi',
 				payList: [
 					{
-						type: 'UPI',
+						type: 'upi',
 						name: 'UPI',
 						icon: 'icon-pay-upi'
 					},
 					{
-						type: 'Paytm',
+						type: 'bankCard',
 						name: 'Bank Card',
 						icon: 'icon-pay-card'
 					}
@@ -97,23 +97,23 @@
 					ptype: this.ptype
 				}).then(res => {
 					if (res.code === 200) {
-						if (res.data.status == 'FAIL') {
-							this.cancelPay(res.data.message)
+						if (res.data.code != 200) {
+							this.cancelPay()
 						} else {
 							this.createTimer()
-							window.open(res.data.info.url, '_blank')
+							window.open(res.data.data.payUrl, '_blank')
 						}
 					}
 				})
 			},
-			cancelPay (errorMsg) {
+			cancelPay () {
 				this.$http.post('/api.php/finance/pay/payCancel', {
 					order_sn: this.order_sn
 				}).then(res => {
 					if (res.code === 200) {
 						uni.showModal({
 							title: 'FAIL',
-							content: `${errorMsg}, Please return`,
+							content: `Failed, Please return`,
 							showCancel: false,
 							confirmText: 'Confirm',
 							success() {

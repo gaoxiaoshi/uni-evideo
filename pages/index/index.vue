@@ -25,7 +25,7 @@
 								:lazy-load="true"
 								:src="item.img_url"
 								mode="scaleToFill"
-								@click="handleVideoDetail(item.vid)"
+								@click="handleBannerDetail(item)"
 								>
 							</image>
 						</swiper-item>
@@ -124,9 +124,10 @@
 					if (res.code === 200) {
 						let list = res.data.list
 						this.bannerList = list.map(item => {
+							console.log(item.img.search('http') >= 0 ? item.img : this.$helper.commonSourcePath + item.img)
 							return {
 								...item,
-								img_url: this.$helper.commonSourcePath + item.img
+								img_url: item.img.search('http') >= 0 ? item.img : this.$helper.commonSourcePath + item.img
 							}
 						})
 						this.currentBannerImg = this
@@ -159,6 +160,13 @@
 			},
 			handleVideoDetail (id) {
 				uni.navigateTo({ url: '/pages/video/index?id=' + id });
+			},
+			handleBannerDetail (item) {
+				if (item.link_type === 1) {
+					uni.navigateTo({ url: '/pages/video/index?id=' + item.link });
+				} else if (item.link_type === 3) {
+					window.open(item.link, '_blank')
+				}
 			},
 			bannerChange (e) {
 				this.currentBanner = e.detail.current
