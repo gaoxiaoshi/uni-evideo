@@ -20,7 +20,7 @@
 		</view>
 		<view class="user-center--panel">
 			<u-cell-group>
-				<u-cell-item title="Recommend" value="Earn Coin">
+				<u-cell-item title="Recommend" value="Earn Coin" @click="checkWhiteList('invite')">
 					<u-icon class="micon" slot="icon" name="tuijian" custom-prefix="custom-icon" size="34" color="#ddaf5a"></u-icon>
 				</u-cell-item>
 			</u-cell-group>
@@ -134,6 +134,11 @@
 			},
 			handleCellClick(path) {
 				switch (path) {
+					case 'invite':
+						uni.navigateTo({
+							url: '/pages/user/invite/index'
+						});
+						break;
 					case 'account':
 						uni.navigateTo({
 							url: '/pages/user/account/index'

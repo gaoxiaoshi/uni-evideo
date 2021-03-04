@@ -53,6 +53,30 @@
 			}	
 		},
 		{
+			"path" : "pages/user/invite/index",
+			"style":                                                                                    
+			{
+					"navigationBarTitleText": "Invite",
+					"enablePullDownRefresh": true
+			}
+		},
+		{
+			"path" : "pages/user/invite/award",
+			"style":                                                                                    
+			{
+					"navigationBarTitleText": "My Awards",
+					"enablePullDownRefresh": true
+			}
+		},
+		{
+			"path" : "pages/user/invite/friends",
+			"style":                                                                                    
+			{
+					"navigationBarTitleText": "My Friends",
+					"enablePullDownRefresh": true
+			}
+		},
+		{
 			"path" : "pages/user/account/index",
 			"style":                                                                                    
 			{

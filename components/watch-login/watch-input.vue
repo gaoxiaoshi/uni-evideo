@@ -8,6 +8,7 @@
 			:focus="_focus"
 			:maxlength="maxlength" 
 			:placeholder="placeholder" 
+			:disabled="disabled"
 			:password="type==='password'&&!showPassword" 
 			
 			@input="$emit('input', $event.detail.value)"
@@ -57,6 +58,10 @@
 				//最大长度
 				type: [Number,String],
 				default: 20,
+			},
+			disabled: {
+				type: Boolean,
+				default: false
 			},
 			isShowPass:{
 				//是否显示密码图标（二选一）
@@ -185,7 +190,7 @@
 		align-items: center;
 		/* height: 36rpx; */   /* Input 高度 */
 		color: #333333;
-		padding: 40rpx 32rpx;
+		padding: 20rpx 32rpx;
 		margin:32rpx 0;
 	}
 	.img{

@@ -27,6 +27,12 @@
 					placeholder="Re-Password"
 					isShowPass
 				></wInput>
+				<wInput
+					v-model="inviteCode"
+					type="text"
+					placeholder="Invite-Code"
+					:disabled="inviteDisabled"
+				></wInput>
 			</view>
 				
 			<wButton 
@@ -55,6 +61,8 @@
 				repassword: '',
 				group_id: 1,
 				device_id: '',
+				inviteCode: '',
+				inviteDisabled: false,
 				isRotate: false, //是否加载旋转
 			}
 		},
@@ -62,8 +70,29 @@
 			wInput,
 			wButton,
 		},
-		mounted() {
-			_this= this;
+		onLoad(query) {
+			let _this = this
+			if (query.inviteCode) {
+				uni.getStorage({
+					key: 'inviteCode',
+					success: (res) => {
+						console.log('成功：', res)
+						_this.inviteCode = res.data
+					},
+					fail: (e) => {
+						uni.setStorage({
+							key: 'inviteCode',
+							data: query.inviteCode,
+							success: function () {
+								_this.inviteCode = query.inviteCode
+							}
+						})
+					},
+					complete: () => {
+						_this.inviteDisabled = true
+					}
+				});
+			}
 		},
 		methods: {
 		  startReg() {
@@ -105,6 +134,7 @@
 					account: this.account,
 					password: this.password,
 					repassword: this.repassword,
+					inviteCode: this.inviteCode,
 					group_id: this.group_id,
 					device_id: this.device_id
 				}

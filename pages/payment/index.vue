@@ -23,15 +23,25 @@
 			return {
 				order_sn: '',
 				amount: '',
-				ptype: 'upi',
+				ptype: '922',
 				payList: [
-					{
+					/* {
 						type: 'upi',
 						name: 'UPI',
 						icon: 'icon-pay-upi'
 					},
 					{
 						type: 'bankCard',
+						name: 'Bank Card',
+						icon: 'icon-pay-card'
+					}, */
+					{
+						type: '922',
+						name: 'UPI',
+						icon: 'icon-pay-upi'
+					},
+					{
+						type: '907',
 						name: 'Bank Card',
 						icon: 'icon-pay-card'
 					}
@@ -96,12 +106,19 @@
 					amount: this.amount,
 					ptype: this.ptype
 				}).then(res => {
+					console.log(res)
 					if (res.code === 200) {
-						if (res.data.code != 200) {
+						/* if (res.data.code != 200) {
 							this.cancelPay()
 						} else {
 							this.createTimer()
 							window.open(res.data.data.payUrl, '_blank')
+						} */
+						if (res.data.status == 'success') {
+							this.createTimer()
+							window.open(res.data.data.pay_url, '_blank')
+						} else {
+							this.cancelPay()
 						}
 					}
 				})

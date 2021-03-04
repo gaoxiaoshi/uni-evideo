@@ -18,5 +18,10 @@ export default {
 		lolita: 'Lolita',
 		uniform: 'Uniform Temptation',
 		Wife: 'Old Lady'
+	},
+	awardType: {
+		1: 'Register awards',
+		2: 'Invite awards',
+		3: 'Distribution awards'
 	}
 }
