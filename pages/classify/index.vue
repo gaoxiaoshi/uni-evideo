@@ -23,7 +23,7 @@
 									@click="handleVideoDetail(video.vod_id)">
 									<view
 										class="video-thumb"
-										:style="{'backgroundImage': 'url(' + $helper.videoSourcePath + video.vod_pic + ')'}"
+										:style="{'backgroundImage': `url(${getVideoPoster(video.vod_pic)})`}"
 									>
 										<view class="video-thumb--tag">
 											<view class="tag tag-year">{{video.vod_year}}</view>
@@ -97,6 +97,9 @@
 					this.list = list
 					this.getDateList(true)
 				}
+			},
+			getVideoPoster (img) {
+				return img.search('http') >= 0 ? img : this.$helper.videoSourcePath + img
 			},
 			getDateList(init = false) {
 				if (init) {

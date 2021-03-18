@@ -1,7 +1,7 @@
 <template>
 	<view class="history-view">
 		<block v-if="historyList.length > 0">
-			<navigator :url="`/pages/video/index?id=${row.vod_id}`" class="guess-list" v-for="row in historyList" :key="row.vid">
+			<navigator :url="`/pages/video/index?id=${row.vid}`" class="guess-list" v-for="row in historyList" :key="row.vid">
 				<u-image width="276rpx" height="164rpx" border-radius="10" mode="aspectFill" :src="$helper.videoSourcePath + row.vod_pic">
 					<u-loading slot="loading"></u-loading>
 				</u-image>
@@ -29,7 +29,18 @@
 			noData
 		},
 		onShow() {
-			this.historyList = uni.getStorageSync('historyList')
+			this.init()
+		},
+		methods: {
+			init () {
+				let list = uni.getStorageSync('historyList')
+				if (list.length > 0) {
+					this.historyList = list.filter(item => item.vid != 'undefined')
+					uni.setStorageSync('historyList', this.historyList)
+				} else {
+					this.historyList = []
+				}
+			}
 		}
 	}
 </script>

@@ -64,7 +64,7 @@
 						@click="handleVideoDetail(video.vod_id)">
 						<view
 							class="video-thumb"
-							:style="{'backgroundImage': 'url(' + $helper.videoSourcePath + video.vod_pic + ')'}"
+							:style="{'backgroundImage': `url(${getVideoPoster(video.vod_pic)})`}"
 						>
 							<view class="video-thumb--tag">
 								<view class="tag tag-year">{{video.vod_year}}</view>
@@ -158,6 +158,9 @@
 					confirmText: 'Confirm'
 				})
 			},
+			getVideoPoster (img) {
+				return img.search('http') >= 0 ? img : this.$helper.videoSourcePath + img
+			},
 			handleVideoDetail (id) {
 				uni.navigateTo({ url: '/pages/video/index?id=' + id });
 			},
@@ -244,6 +247,7 @@
 	}
 	.video-view {
 		margin-top: 10rpx;
+		background-color: #fff;
 		.video-view--item {
 			.item-head {
 				display: flex;

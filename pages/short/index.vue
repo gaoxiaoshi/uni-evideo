@@ -4,77 +4,54 @@
 			class="swiper"
 			:vertical="true"
 			@change="changeCurrent"
-			@animationfinish="animationFinish"
 			:current="index"
 			:style="{ height: height }">
 			<swiper-item v-for="(item, idx) in videoList" :key="idx" class="swiper-item">
 				<!-- 视频渲染数预加载数影响性能 -->
 				<div class="swiper-item--container">
-					<block v-if="item.src">
-						<video-player
-							class="video"
-							:id="item.id"
-							:src="item.src"
-							:poster="item.poster"
-							:height="height"
-							:width="width"
-							:play="item.flag"
-							v-if="Math.abs(index-idx)<=1"
-							:gDuration="item.duration"
-							:initialTime="item.initialTime"
-							@pause="pauseVideo"
-							:objectFit="item.objectFit"
-							@playEnd="playEnd"
-						>
-						</video-player>
-						
-						<cover-view class="cover-view-left">
-							<cover-view class="left-view">
-								<!-- #ifdef APP-PLUS-NVUE -->
-								<text class="left-text">@{{item.at}}</text>
-								<!-- #endif -->
-								<!-- #ifndef APP-PLUS-NVUE -->
-								<cover-view class="left-text">@{{item.at}}</cover-view>
-								<!-- #endif -->
-							</cover-view>
-							<cover-view class="left-view">
-								<!-- #ifdef APP-PLUS-NVUE -->
-								<text class="left-text">{{item.content}}</text>
-								<!-- #endif -->
-								<!-- #ifndef APP-PLUS-NVUE -->
-								<cover-view class="left-text">{{item.content}}</cover-view>
-								<!-- #endif -->
-							</cover-view>
-						</cover-view>
-						<cover-view class="cover-view-right">
-							
-							<cover-image :src="item.check ? '../../static/icon-like-check.png' : '../../static/icon-like.png'" class="img" @click.stop="tapLove"></cover-image>
-							
-							<!-- #ifdef APP-PLUS-NVUE -->
-							<text class="right-text">{{item.like}}</text>
-							<!-- #endif -->
-							<!-- #ifndef APP-PLUS-NVUE -->
-							<cover-view class="right-text">{{item.like}}</cover-view>
-							<!-- #endif -->
-							
-						</cover-view>
-					</block>
+					<video-player
+						class="video"
+						v-if="idx === index"
+						:video-id="item.id"
+						:video-data="item"
+						:video-config="sysconfig"
+						:src="item.src"
+						:height="height"
+						@ended="ended"
+						@timeupdate="timeupdate">
+					</video-player>
+					
+					<div class="cover-view-left">
+						<div class="left-view">
+							<div class="left-text">【{{item.title}}】</div>
+						</div>
+						<div class="left-view">
+							<div class="btn-group">
+								<div class="left-btn" @click="handleDetail(item.id)">
+									<image class="btn-play" src="../../static/icon-play.png" mode="widthFix">FULL VIDEO {{duration || ''}}</image>
+								</div>
+							</div>
+						</div>
+					</div>
+					<!-- <cover-view class="cover-view-right">
+						<cover-image :src="item.check ? '../../static/icon-like-check.png' : '../../static/icon-like.png'" class="img" @click.stop="tapLove"></cover-image>
+						<cover-view class="right-text">{{item.like}}</cover-view>	
+					</cover-view> -->
 				</div>
 			</swiper-item>
 		</swiper>
 		<u-tabbar
 			:list="tabbarlist"
-			active-color="#fe9900"
-			inactive-color="#74767b"
-			:mid-button="true"
-			bg-color="#1e1e1e">
+			active-color="#ffffff"
+			inactive-color="#646566"
+			:mid-button="false"
+			bg-color="transparent">
 		</u-tabbar>
 	</view>
 </template>
 
 <script>
 	import { mapGetters } from 'vuex'
-	import chunleiVideo from '@/components/chunlei-video/chunlei-video'
 	import videoPlayer from '@/components/video-player/index.vue'
 	export default {
 		data() {
@@ -84,7 +61,8 @@
 				index: 0,
 				width: '',
 				oldIndex: 0,
-				// 剩余多少视频加载视频列表
+				currentVideo: null,
+				duration: '',
 				playCount: 2,
 				videoList: [],
 				page: 1,
@@ -93,16 +71,16 @@
 		},
 		watch:{
 			index(newVal, oldVal) {
-				let len = this.videoList.filter(item=>item.src).length
+				let len = this.videoList.length
 				//加载视频
 				if(len - this.index - 1 <= this.playCount){
-					this.pushVideoList()
+					this.page++
+					this.getList()
 				}
 				this.oldIndex = oldVal
 			}
 		},
 		components: {
-			chunleiVideo,
 			videoPlayer
 		},
 		computed: {
@@ -111,45 +89,105 @@
 			])
 		},
 		created(){
+			let sysInfo = uni.getSystemInfoSync()
+			console.log('System info：', sysInfo)
 			this.sysheight = uni.getSystemInfoSync().windowHeight
-			this.height = `${this.sysheight}px` 
+			this.height = `${this.sysheight + 50}px` 
 			let width = uni.getSystemInfoSync().windowWidth 
 			this.width = `${width}px`
+			this.getList(true)
 		},
-		mounted() {
-			// this.init(true)
-			
-			/* this.index = this.videoList.reduce((total,item)=>{
-				if(id==''||id==item.id){
-					id = ''
-				}else{
-					total++
-				}
-				return total
-			},0)
-			if(!this.index){
-				this.$nextTick(()=>{
-					this.videoPlay(this.index)
-				})
-			} */
+		onShow() {
+			this.init()
 		},
 		onHide(){
-			for (let item of this.videoList) {
-				item.flag = false
-			}
+			this.currentVideo.pause()
+		},
+		onUnload() {
+			this.currentVideo.pause()
 		},
 		methods: {
-			init (init = false) {
+			init () {
 				this.$http.post('/api.php/index/config/getConfig',{}).then((res)=>{
 					uni.setStorageSync('sys_config', res.data)
 					// 系统参数
 					this.sysconfig = res.data
-					console.log('系统参数：', this.sysconfig)
 					// 初始会员权限
 					this.userInfo = res.data.userinfo || null
-					// 获取视频列表
-					this.getList(init)
 				})
+			},
+			handleDetail (id) {
+				console.log('CURRENT:', this.videoList[this.index])
+				this.currentVideo.pause()
+				if (!this.userInfo) {
+					uni.showModal({
+						title: 'Message',
+						content: 'You are not signed in yet，Please sign in or sign up first',
+						cancelText: 'Sign Up',
+						confirmText: 'Sign In',
+						success: res => {
+							if (res.confirm) {
+								uni.navigateTo({
+									url: '/pages/login/index'
+								})
+							}
+							if (res.cancel) {
+								uni.navigateTo({
+									url: '/pages/register/index'
+								})
+							}
+						}
+					})
+				} else {
+					console.log('CURRENT:', this.videoList[this.index])
+					if (this.videoList[this.index].isPay) {
+						uni.navigateTo({ url: '/pages/video/index?id=' + id })
+					} else {
+						if (this.userInfo.group_id != 1) {
+							uni.navigateTo({ url: '/pages/video/index?id=' + id })
+						} else {
+							uni.showModal({
+								title: 'Message',
+								content: 'Please pay for it or upgrade vip to watch',
+								cancelText: 'Upgrade',
+								confirmText: 'Pay',
+								success: res => {
+									if (res.confirm) {
+										uni.showLoading({
+											title: this.$t('pay')
+										})
+										console.log(this.videoList[this.index])
+										let params = {
+											vid: this.videoList[this.index].id,
+											title: this.videoList[this.index].title,
+											price: this.sysconfig.player_price
+										}
+										this.$http.post('/api.php/finance/exchange/exchangeVideo', params).then(res => {
+											uni.hideLoading()
+											if (res.code == 200) {
+												let _this = this
+												uni.showToast({
+													title: 'Success',
+													icon: 'success',
+													duration: 2000,
+													success() {
+														_this.videoList[_this.index].isPay = true
+														uni.navigateTo({ url: '/pages/video/index?id=' + id })
+													}
+												})
+											}
+										})
+									}
+									if (res.cancel) {
+										uni.navigateTo({
+											url: '/pages/user/vip'
+										})
+									}
+								}
+							})
+						}
+					}
+				}
 			},
 			getList (init) {
 				if (init) {
@@ -169,13 +207,8 @@
 								poster: item.vod_pic,
 								flag: false,
 								check: false,
-								like:'7w',
-								comment:'1045',
-								at: item.vod_name,
 								id: item.vod_id,
-								avater: item.vod_id,
-								initialTime: 0,
-								duration: 663
+								isPay: item.isPay
 							}
 						})
 						if (init) {
@@ -186,10 +219,53 @@
 					}
 				})
 			},
-			animationFinish(e){
-				//#ifdef APP-PLUS
-				this.changeCurrent(e)
-				//#endif
+			timeupdate(event) {
+				this.currentVideo = event.video
+				// 获取视频总时长
+				let duration = event.duration
+				let currentTime = event.currentTime
+				
+				let limitTime = parseInt(this.sysconfig.player_limit_time)
+				
+				if (duration) {
+					this.duration = this.formatSeconds(duration)
+				} else {
+					this.duration = 0
+				}
+				
+				if (this.userInfo) {
+					// 已登录
+					if (this.userInfo.group_id == 1) {
+						// 非会员
+						// console.log('非会员:', limitTime, currentTime, this.videoList[this.index].isPay)
+						if (!this.videoList[this.index].isPay) {
+							if (limitTime < currentTime) {
+								// this.index ++
+								this.currentVideo.video.currentTime = 0
+							}
+						}
+					}
+				} else {
+					// 未登录
+					// console.log('未登录:', limitTime, currentTime)
+					if (limitTime < currentTime) {
+						// this.index ++
+						// console.log(this.currentVideo.video)
+						this.currentVideo.video.currentTime = 0
+					}
+				}
+			},
+			ended () {
+				this.index ++
+			},
+			formatSeconds(value) {
+				let theTime = parseInt(value);// 秒
+				let middle= 0;// 分
+				if(theTime > 60) {
+						middle= parseInt(theTime/60);
+						theTime = parseInt(theTime%60);	
+				}
+				return `${middle>9?middle:'0'+middle}:${theTime>9?theTime:'0'+theTime}`;
 			},
 			changeCurrent(e){
 				this.index = e.detail.current; 
@@ -204,42 +280,6 @@
 					
 				}) 
 				
-			},
-			pushVideoList () {
-				let params 
-				let promise = new Promise((resolve,reject)=>{
-					uni.request({
-						url: 'https://api.apiopen.top/videoRecommend?id=127397',
-						success: (res) => {
-							let videoGroup = []
-							for (let item of res.data.result) {
-								if(item.type == 'videoSmallCard'){
-									videoGroup.push({
-										src:item.data.playUrl,
-										content:item.data.title,
-										flag:false,
-										check:false,
-										like:'7w',
-										comment:'1045',
-										at:item.data.author.name,
-										id:item.data.author.icon,
-										avater:item.data.author.icon,
-										initialTime:0,
-										duration:item.data.duration
-									})
-								}
-							}
-							
-							let len = this.videoList.filter(item=>item.src).length
-							for(let i = len;i<len+videoGroup.length;i++){
-								this.$set(this.videoList,i,videoGroup[i-len])
-								
-							}
-							resolve()
-						}
-					})
-				}) 
-				return promise
 			},
 			tapLove(){
 				this.videoList[this.index].check = !this.videoList[this.index].check
@@ -283,6 +323,7 @@
 		.swiper-item {
 			flex: 1;
 			.swiper-item--container {
+				position: relative;
 				width: 100%;
 				height: 100%;
 			}
@@ -295,18 +336,11 @@
 			flex: 1;
 			width: 750rpx;
 		}
-		.cover-view-center{
-			position: absolute;
-			justify-content: center;
-			align-items: center;
-			opacity: 0.1;
-			z-index: 999;
-		}
 		.cover-view-left{
 			position: absolute;
-			margin-left: 10upx;
-			width: 500upx;
-			bottom: 120upx;
+			left: 30rpx;
+			right: 30rpx;
+			bottom: 60px;
 			z-index: 9999;
 			font-size: 16px;
 			color: #FFFFFF;
@@ -320,8 +354,29 @@
 			margin-bottom: 20upx;
 		}
 		.left-text{
-			font-size: 16px;
+			font-size: 18px;
 			color: #FFFFFF;
+			white-space: normal;
+			display: -webkit-box;
+			-webkit-box-orient: vertical;
+			-webkit-line-clamp: 2;
+			overflow: hidden;
+		}
+		.btn-group {
+			display: inline-block;
+		}
+		.left-btn {
+			display: flex;
+			align-items: center;
+			height: 32px;
+			background-color: rgba(109, 26, 255, 0.8);
+			font-size: 16px;
+			padding: 0 10px;
+			border-radius: 32px;
+			.btn-play {
+				width: 30rpx;
+				margin-right: 10rpx;
+			}
 		}
 		.avater{
 			border-radius: 50upx;

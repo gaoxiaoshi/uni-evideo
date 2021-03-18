@@ -4,6 +4,23 @@
 	},
 	"pages": [
 		{
+			"path" : "pages/short/index",
+			"style" :                                                                                    
+			{
+				// "navigationBarTitleText": "Wonderful",
+				"navigationStyle": "custom",
+				"enablePullDownRefresh": false
+			}
+		},
+		{
+			"path" : "pages/download/index",
+			"style" :                                                                                    
+			{
+				"navigationStyle": "custom",
+				"enablePullDownRefresh": false
+			}
+		},
+		{
 			"path": "pages/index/index",
 			"style": {
 				"navigationStyle": "custom"
@@ -161,14 +178,6 @@
 			"style" :                                                                                    
 			{
 				"navigationBarTitleText": "Payment",
-				"enablePullDownRefresh": false
-			}
-		},
-		{
-			"path" : "pages/short/index",
-			"style" :                                                                                    
-			{
-				"navigationBarTitleText": "Wonderful",
 				"enablePullDownRefresh": false
 			}
 		}
