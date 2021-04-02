@@ -4,7 +4,7 @@
 		<u-sticky>
 			<view class="video-player">
 				<view class="player limit" v-show="playLimit">
-					<view class="limit-text">At the end of the trial, Please pay for it or upgrade vip to watch.<block v-if="!userInfo">If you already pay for it or vip, Please <navigator class="link" url="/pages/login/index">Sign In</navigator>, first!</block></view>
+					<view class="limit-text">At the end of the trial, Please pay ₹{{sysconfig.player_price}} for it or upgrade vip to watch.<block v-if="!userInfo">If you already pay for it or vip, Please <navigator class="link" url="/pages/login/index">Sign In</navigator>, first!</block></view>
 					<view class="limit-action">
 						<view class="action-item" @click="handleVideoPay">Pay</view>
 						<view class="action-item upgrade" @click="handleUpgrade">Upgrade</view>
@@ -188,7 +188,7 @@
 					video: {
 						url: this.srcList[this.vod_play_from[this.currentLine]][this.currentSrc].url,
 						pic: this.$helper.videoSourcePath + this.vod_pic,
-						type: 'customHls',
+						type: this.srcList[this.vod_play_from[this.currentLine]][this.currentSrc].url.indexOf('.m3u8') > -1 ? 'customHls' : 'auto',
 						customType: {
 							customHls: function (video, player) {
 								const hls = new Hls()

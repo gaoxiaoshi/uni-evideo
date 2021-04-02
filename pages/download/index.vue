@@ -10,7 +10,7 @@
 			</view>
 		</view>
 		<view class="fixed-footer">
-			<a class="download-btn" :href="download_url" target="_black">
+			<a class="download-btn" :href="download_url" @click="handleCollect" target="_black">
 				<view class="btn">
 					<u-icon class="icon" name="android-fill" color="#FFF" size="28" v-if="platform == 'android'"></u-icon>
 					<u-icon class="icon" name="apple-fill" color="#FFF" size="28" v-if="platform == 'ios'"></u-icon>
@@ -81,6 +81,11 @@
 					if (res.code == 200) {
 						this.download_url = res.data
 					}
+				})
+			},
+			handleCollect () {
+				this.$http.post('/api.php/index/config/collect', {
+					platform: this.platform
 				})
 			},
 			isSafari() {

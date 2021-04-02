@@ -9,15 +9,15 @@ export default {
 	},
 	classilfy: {
 		recommend: 'Recommendation',
-		selfie: 'Selfie',
-		jk: 'Japan',
+		selfie: 'Domestic',
+		jk: 'SM&Alternative',
 		asia: 'Asia',
 		europe: 'Europe',
-		bigboob: 'Beautiful Boob',
-		rape: 'Rape&Incest',
-		lolita: 'Lolita',
+		bigboob: 'Homesexual',
+		rape: 'Young',
+		lolita: 'Amateur',
 		uniform: 'Uniform Temptation',
-		Wife: 'Old Lady'
+		Wife: 'Anime'
 	},
 	awardType: {
 		1: 'Register awards',

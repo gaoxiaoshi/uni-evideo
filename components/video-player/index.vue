@@ -115,7 +115,7 @@
 					video: {
 						url: this.src,
 						pic: this.$helper.videoSourcePath + this.videoData.poster,
-						type: 'customHls',
+						type: this.src.indexOf('.m3u8') > -1 ? 'customHls' : 'auto',
 						customType: {
 							customHls: function (video, player) {
 								const hls = new Hls()
